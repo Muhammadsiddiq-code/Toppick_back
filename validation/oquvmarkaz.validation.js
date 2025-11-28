@@ -38,15 +38,49 @@
 
 
 
+// const Joi = require("joi");
+
+// const createOquvmarkazSchema = Joi.object({
+//   name: Joi.string().min(3).max(100).required(),
+//   number: Joi.string()
+//     .pattern(/^\+998\d{9}$/)
+//     .required(),
+//   address: Joi.string().min(5).required(),
+//   googlemap: Joi.string().uri().required(),
+// });
+
+// exports.validate = (data) => createOquvmarkazSchema.validate(data);
+
+
+
+
+
 const Joi = require("joi");
 
-const createOquvmarkazSchema = Joi.object({
-  name: Joi.string().min(3).max(100).optional(),
+const baseSchema = {
+  name: Joi.string().min(3).max(100),
   number: Joi.string()
     .pattern(/^\+998\d{9}$/)
-    .optional(),
-  address: Joi.string().min(5).optional(),
-  googlemap: Joi.string().uri().optional(),
+    .messages({
+      "string.pattern.base": "Telefon raqami +998 bilan boshlanishi kerak",
+    }),
+  address: Joi.string().min(5).max(255),
+  googlemap: Joi.string().uri(),
+  type: Joi.string().min(3).max(100),
+};
+
+const createOquvmarkazSchema = Joi.object({
+  ...baseSchema,
+  name: baseSchema.name.required(),
+  number: baseSchema.number.required(),
+  address: baseSchema.address.required(),
+  googlemap: baseSchema.googlemap.required(),
+  type: baseSchema.type.required(),
 });
 
-exports.validate = (data) => createOquvmarkazSchema.validate(data);
+const updateOquvmarkazSchema = Joi.object(baseSchema).min(1);
+
+module.exports = {
+  validateCreate: (data) => createOquvmarkazSchema.validate(data),
+  validateUpdate: (data) => updateOquvmarkazSchema.validate(data),
+};

@@ -19,9 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     googlemap: {
+      type: DataTypes.TEXT, // VARCHAR(255) o'rniga TEXT
+      allowNull: false,
+    },
+    type: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      defaultValue: "Umumiy",
     },
   });
 

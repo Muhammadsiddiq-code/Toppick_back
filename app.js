@@ -11,6 +11,7 @@ const adminRoutes = require("./routes/serviceadmin.routes");
 const Restaran = require("./routes/restaran.routes");
 const Oquvmarkaz = require("./routes/oquvmarkaz.routes");
 const kutubxona = require("./routes/kutubxona.routes");
+const swiper = require("./routes/swiper.routes")
 
 dotenv.config();
 
@@ -24,15 +25,17 @@ app.use(cors({ origin: "*" }));
 // app.use("/api", customerRoutes);
 // app.use("/api", eduRoutes);
 app.use("/api", med);
-app.use("/api", adminRoutes);
+app.use("/api/admins", adminRoutes);
 app.use("/api", Restaran);
 app.use("/api", Oquvmarkaz);
 app.use("/api", kutubxona);
+app.use("/api", swiper)
+
 
 setupSwagger(app);
 
 sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     console.log(" Database ulandi");
     app.listen(PORT, () => {

@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Davlat kutubxonasi",
+    },
   });
 
   return Kutubxona;

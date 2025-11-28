@@ -50,7 +50,6 @@ exports.getKutubxonaById = async (req, res) => {
   }
 };
 
-// ✅ Yangilash
 exports.updateKutubxona = async (req, res) => {
   try {
     const { error } = kutubxonaValidation.validate(req.body);
@@ -68,7 +67,6 @@ exports.updateKutubxona = async (req, res) => {
   }
 };
 
-// ✅ O‘chirish
 exports.deleteKutubxona = async (req, res) => {
   try {
     const kutubxona = await Kutubxona.findByPk(req.params.id);
